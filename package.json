@@ -67,6 +67,7 @@
         "@wc-toolkit/cem-inheritance": "^1.0.4",
         "@web-types/lit": "2.0.0-3",
         "@webcomponents/webcomponentsjs": "^2.8.0",
+        "@material/web": "npm:@maicol07/material-web@^2.0.0",
         "custom-element-jet-brains-integration": "^1.7.0",
         "eslint": "^9.25.0",
         "eslint-config-google": "^0.14.0",

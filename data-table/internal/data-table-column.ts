@@ -1,34 +1,36 @@
-import {html, LitElement, nothing, PropertyValues} from 'lit';
-import {property} from 'lit/decorators/property.js';
-import {queryAssignedElements} from 'lit/decorators/query-assigned-elements.js';
-import {query} from 'lit/decorators/query.js';
-import {TextField} from '@material/web/textfield/internal/text-field.js';
-import {IconButton} from '@material/web/iconbutton/internal/icon-button.js';
-import '@material/web/textfield/outlined-text-field.js';
-import '@material/web/iconbutton/icon-button.js';
-import '@material/web/checkbox/checkbox.js';
-import '@material/web/icon/icon.js';
-import {CellCheckedEventDetail} from './data-table-cell.js';
-import {Checkbox} from '@material/web/checkbox/internal/checkbox.js';
+import { html, LitElement, nothing, PropertyValues } from 'lit';
+import { property } from 'lit/decorators/property.js';
+import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
+import { query } from 'lit/decorators/query.js';
+// @ts-ignore
+import { TextField } from 'material/text/text-field.js';
+// @ts-ignore
+import { IconButton } from 'material/buttons/icon-button.js';
+import 'material/text/text-field.js';
+import 'material/buttons/icon-button.js';
+import 'material/checkbox/checkbox.js';
+import 'material/icon/icon.js';
+import { CellCheckedEventDetail } from './data-table-cell.js';
+import { Checkbox } from '@material/web/checkbox/internal/checkbox.js';
 
 export interface FilterTextFieldInputEventDetail {
-  field: TextField,
-  text: string,
-  column: DataTableColumn,
-  caseSensitive: boolean,
-  customFiltering: boolean
+    field: TextField;
+    text: string;
+    column: DataTableColumn;
+    caseSensitive: boolean;
+    customFiltering: boolean;
 }
 
 export interface FilterTextFieldKeyDownEventDetail {
-  field: TextField,
-  key: string,
-  column: DataTableColumn,
+    field: TextField;
+    key: string;
+    column: DataTableColumn;
 }
 
 export interface SortButtonClickedEventDetail {
-  column: DataTableColumn,
-  isDescending: boolean,
-  customSorting: boolean,
+    column: DataTableColumn;
+    isDescending: boolean;
+    customSorting: boolean;
 }
 
 /**
@@ -38,222 +40,239 @@ export interface SortButtonClickedEventDetail {
  * @fires sort - Event emitted when the user has typed in column filter textfield. Detail contains the `column`, `isDescending` and `customSorting` properties.
  */
 export class DataTableColumn extends LitElement {
-  /**
-   * Column type. If `checkbox`, the checkbox inside the column will be also created if not supplied via the default slot.
-   * If `numeric`, the column label will be aligned to the right.
-   */
-  @property({type: String, reflect: true}) type: '' | 'numeric' | 'checkbox' = '';
-  /**
-   * Whether the column can be sorted.
-   */
-  @property({type: Boolean, reflect: true}) sortable = false;
-  /**
-   * Whether the column is sorted.
-   */
-  @property({type: Boolean, reflect: true}) sorted = false;
-  /**
-   * Whether the column is sorted descending.
-   */
-  @property({type: Boolean, reflect: true, attribute: 'sorted-descending'}) sortedDescending = false;
-  /**
-   * Whether the column is displaying a sort button.
-   */
-  @property({type: Boolean, reflect: true, attribute: 'with-sort-button'}) withSortButton = false;
-  /**
-   * Whether the column is using a custom sorting function. If true, the column will not sort automatically and
-   * you will need to handle the sorting yourself (see `sort` event).
-   */
-  @property({type: Boolean, attribute: 'custom-sorting'}) customSorting = false;
-  /**
-   * Whether the column can be filtered.
-   */
-  @property({type: Boolean, reflect: true}) filterable = false;
-  /**
-   * Label to show on the filter textfield.
-   */
-  @property({type: String, attribute: 'filter-text-field-label'}) filterTextFieldLabel = 'Filter';
-  /**
-   * Sets the filtering to be case-sensitive.
-   */
-  @property({type: Boolean, reflect: true, attribute: 'filter-case-sensitive'}) filterCaseSensitive = false;
-  /**
-   * Whether the column is using a custom filtering function. If true, the column will not filter automatically and
-   * you will need to handle the filtering yourself (see `filter` event).
-   */
-  @property({type: Boolean, attribute: 'custom-filtering'}) customFiltering = false;
+    /**
+     * Column type. If `checkbox`, the checkbox inside the column will be also created if not supplied via the default slot.
+     * If `numeric`, the column label will be aligned to the right.
+     */
+    @property({ type: String, reflect: true }) type: '' | 'numeric' | 'checkbox' = '';
+    /**
+     * Whether the column can be sorted.
+     */
+    @property({ type: Boolean, reflect: true }) sortable = false;
+    /**
+     * Whether the column is sorted.
+     */
+    @property({ type: Boolean, reflect: true }) sorted = false;
+    /**
+     * Whether the column is sorted descending.
+     */
+    @property({ type: Boolean, reflect: true, attribute: 'sorted-descending' }) sortedDescending = false;
+    /**
+     * Whether the column is displaying a sort button.
+     */
+    @property({ type: Boolean, reflect: true, attribute: 'with-sort-button' }) withSortButton = false;
+    /**
+     * Whether the column is using a custom sorting function. If true, the column will not sort automatically and
+     * you will need to handle the sorting yourself (see `sort` event).
+     */
+    @property({ type: Boolean, attribute: 'custom-sorting' }) customSorting = false;
+    /**
+     * Whether the column can be filtered.
+     */
+    @property({ type: Boolean, reflect: true }) filterable = false;
+    /**
+     * Label to show on the filter textfield.
+     */
+    @property({ type: String, attribute: 'filter-text-field-label' }) filterTextFieldLabel = 'Filter';
+    /**
+     * Sets the filtering to be case-sensitive.
+     */
+    @property({ type: Boolean, reflect: true, attribute: 'filter-case-sensitive' }) filterCaseSensitive = false;
+    /**
+     * Whether the column is using a custom filtering function. If true, the column will not filter automatically and
+     * you will need to handle the filtering yourself (see `filter` event).
+     */
+    @property({ type: Boolean, attribute: 'custom-filtering' }) customFiltering = false;
 
-  /** @internal */
-  @query('md-icon-button') protected sortButton?: IconButton;
-  /** @internal */
-  @queryAssignedElements({slot: 'checkbox', flatten: true}) protected checkboxSlotElements!: Checkbox[];
+    /** @internal */
+    @query('md-icon-button') protected sortButton?: IconButton;
+    /** @internal */
+    @queryAssignedElements({ slot: 'checkbox', flatten: true }) protected checkboxSlotElements!: Checkbox[];
 
-  override connectedCallback() {
-    super.connectedCallback();
+    override connectedCallback() {
+        super.connectedCallback();
 
-    this.role = 'column-header';
-    this.slot = 'header-cell';
-  }
-
-  /** @internal */
-  get checkbox(): Checkbox | undefined {
-    return this.checkboxSlotElements?.[0];
-  }
-
-  constructor() {
-    super();
-    this.addEventListener('click', () => {
-      this.withSortButton = !this.withSortButton;
-    });
-  }
-
-  protected override render() {
-    return html`
-        ${this.renderCheckbox()}
-        ${this.renderSlot()}
-    `;
-  }
-
-  protected renderCheckbox() {
-    if (this.type === 'checkbox') {
-      return html`
-          <slot name="checkbox" @slotchange=${this.onCheckboxSlotChanged}>
-              <md-checkbox
-                      class="mdc-data-table__header-row-checkbox"
-                      @change=${this.onCheckboxClicked}
-                      touch-target="wrapper"
-                      aria-label="Toggle all rows"></md-checkbox>
-          </slot>
-      `;
+        this.role = 'column-header';
+        this.slot = 'header-cell';
     }
-    return '';
-  }
 
-  protected renderFilterTextField() {
-    if (this.filterable && this.type !== 'checkbox') {
-      return html`
-          <slot name="filter-textfield" class="mdc-data-table__filter-textfield">
-              <md-outlined-text-field
-                      label="${this.filterTextFieldLabel}"
-                      style="--md-outlined-text-field-top-space: var(--_pagination-outlined-select-field-top-space); --md-outlined-text-field-bottom-space: var(--_pagination-outlined-select-field-bottom-space);"
-                      @input=${this.onFilterTextFieldInput}
-                      @keydown=${this.onFilterTextFieldKeyDown}
-                      @click="${(e: PointerEvent) => e.stopPropagation()}"
-              />
-          </slot>
-      `;
+    /** @internal */
+    get checkbox(): Checkbox | undefined {
+        return this.checkboxSlotElements?.[0];
     }
-    return nothing;
-  }
 
-  protected renderSlot() {
-    return html`
-        <div class="mdc-data-table__header-cell-filter-wrapper">
-            ${this.sortable ? this.renderSortButton() : html`
-                <slot class="mdc-data-table__header-cell-label"></slot>`}
-            ${this.renderFilterTextField()}
-        </div>
-    `;
-  }
+    constructor() {
+        super();
+        this.addEventListener('click', () => {
+            this.withSortButton = !this.withSortButton;
+        });
+    }
 
-  protected renderSortButton() {
-    return html`
-        <div class="mdc-data-table__header-cell-wrapper">
-            <md-icon-button ?selected=${this.sortedDescending}
-                                     toggle
-                                     @change=${this.onSortButtonClicked}
-                                     @click="${(e: PointerEvent) => e.stopPropagation()}"
-                                     aria-hidden="${this.withSortButton ? 'false' : 'true'}"
-                                     ?hidden="${!this.withSortButton}">
-                <slot name="sort-icon-on" slot="selected">
-                    <md-icon>arrow_downward</md-icon>
+    protected override render() {
+        return html` ${this.renderCheckbox()} ${this.renderSlot()} `;
+    }
+
+    protected renderCheckbox() {
+        if (this.type === 'checkbox') {
+            return html`
+                <slot
+                    name="checkbox"
+                    @slotchange=${this.onCheckboxSlotChanged}
+                >
+                    <md-checkbox
+                        class="mdc-data-table__header-row-checkbox"
+                        @change=${this.onCheckboxClicked}
+                        touch-target="wrapper"
+                        aria-label="Toggle all rows"
+                    ></md-checkbox>
                 </slot>
-                <slot name="sort-icon-off">
-                    <md-icon>arrow_upward</md-icon>
-                </slot>
-            </md-icon-button>
-            &nbsp;
-            <slot class="mdc-data-table__header-cell-label"></slot>
-        </div>
-    `;
-  }
-
-  /** @internal */
-  protected onCheckboxClicked(e: Event) {
-    const checkbox = e.target as Checkbox;
-    /**
-     * Event emitted when the column checkbox has been checked or unchecked.
-     *
-     * Event detail: `CellCheckedEventDetail`;
-     */
-    this.dispatchEvent(new CustomEvent<CellCheckedEventDetail>('checked', {
-      detail: {
-        checked: checkbox.checked ?? false
-      }
-    }));
-  }
-
-  protected onCheckboxSlotChanged() {
-    this.checkbox?.removeEventListener('change', this.onCheckboxClicked);
-    this.checkbox?.addEventListener('change', this.onCheckboxClicked);
-  }
-
-  /** @internal */
-  protected onFilterTextFieldInput(e: InputEvent) {
-    const textfield = e.target as TextField;
-    /**
-     * Event emitted when the user has typed in column filter textfield.
-     *
-     * Event detail: `FilterTextFieldInputEventDetail`;
-     */
-    this.dispatchEvent(new CustomEvent<FilterTextFieldInputEventDetail>('filter', {
-      detail: {
-        field: textfield,
-        text: textfield.value,
-        column: this,
-        caseSensitive: this.filterCaseSensitive,
-        customFiltering: this.customFiltering
-      }
-    }));
-  }
-
-  /** @internal */
-  protected onFilterTextFieldKeyDown(e: KeyboardEvent) {
-    const textfield = e.target as TextField;
-    /**
-     * Event emitted when the user has typed in column filter textfield.
-     *
-     * Event detail: `FilterTextFieldKeyDownEventDetail`;
-     */
-    this.dispatchEvent(new CustomEvent<FilterTextFieldKeyDownEventDetail>('keydown', {
-      detail: {
-        field: textfield,
-        key: e.key,
-        column: this,
-      }
-    }));
-  }
-
-  /** @internal */
-  protected onSortButtonClicked(e: Event) {
-    this.sortedDescending = this.sortButton?.selected ?? false;
-    /**
-     * Event emitted when the user has typed in column filter textfield.
-     *
-     * Event detail: `SortButtonClickedEventDetail`;
-     */
-    this.dispatchEvent(new CustomEvent<SortButtonClickedEventDetail>('sort', {
-      detail: {
-        column: this,
-        isDescending: this.sortedDescending,
-        customSorting: this.customSorting
-      }
-    }));
-  }
-
-  protected override updated(_changedProperties: PropertyValues) {
-    if (_changedProperties.has('sorted')) {
-      this.withSortButton = this.sortable && this.sorted;
+            `;
+        }
+        return '';
     }
-    super.updated(_changedProperties);
-  }
+
+    protected renderFilterTextField() {
+        if (this.filterable && this.type !== 'checkbox') {
+            return html`
+                <slot
+                    name="filter-textfield"
+                    class="mdc-data-table__filter-textfield"
+                >
+                    <md-text-field
+                        color="outlined"
+                        label="${this.filterTextFieldLabel}"
+                        style="--md-outlined-text-field-top-space: var(--_pagination-outlined-select-field-top-space); --md-outlined-text-field-bottom-space: var(--_pagination-outlined-select-field-bottom-space);"
+                        @input=${this.onFilterTextFieldInput}
+                        @keydown=${this.onFilterTextFieldKeyDown}
+                        @click="${(e: PointerEvent) => e.stopPropagation()}"
+                    />
+                </slot>
+            `;
+        }
+        return nothing;
+    }
+
+    protected renderSlot() {
+        return html`
+            <div class="mdc-data-table__header-cell-filter-wrapper">
+                ${this.sortable ? this.renderSortButton() : html` <slot class="mdc-data-table__header-cell-label"></slot>`}
+                ${this.renderFilterTextField()}
+            </div>
+        `;
+    }
+
+    protected renderSortButton() {
+        return html`
+            <div class="mdc-data-table__header-cell-wrapper">
+                <md-icon-button
+                    ?selected=${this.sortedDescending}
+                    toggle
+                    @change=${this.onSortButtonClicked}
+                    @click="${(e: PointerEvent) => e.stopPropagation()}"
+                    aria-hidden="${this.withSortButton ? 'false' : 'true'}"
+                    ?hidden="${!this.withSortButton}"
+                >
+                    <slot
+                        name="sort-icon-on"
+                        slot="selected"
+                    >
+                        <md-icon>arrow_downward</md-icon>
+                    </slot>
+                    <slot name="sort-icon-off">
+                        <md-icon>arrow_upward</md-icon>
+                    </slot>
+                </md-icon-button>
+                &nbsp;
+                <slot class="mdc-data-table__header-cell-label"></slot>
+            </div>
+        `;
+    }
+
+    /** @internal */
+    protected onCheckboxClicked(e: Event) {
+        const checkbox = e.target as Checkbox;
+        /**
+         * Event emitted when the column checkbox has been checked or unchecked.
+         *
+         * Event detail: `CellCheckedEventDetail`;
+         */
+        this.dispatchEvent(
+            new CustomEvent<CellCheckedEventDetail>('checked', {
+                detail: {
+                    checked: checkbox.checked ?? false,
+                },
+            }),
+        );
+    }
+
+    protected onCheckboxSlotChanged() {
+        this.checkbox?.removeEventListener('change', this.onCheckboxClicked);
+        this.checkbox?.addEventListener('change', this.onCheckboxClicked);
+    }
+
+    /** @internal */
+    protected onFilterTextFieldInput(e: InputEvent) {
+        const textfield = e.target as TextField;
+        /**
+         * Event emitted when the user has typed in column filter textfield.
+         *
+         * Event detail: `FilterTextFieldInputEventDetail`;
+         */
+        this.dispatchEvent(
+            new CustomEvent<FilterTextFieldInputEventDetail>('filter', {
+                detail: {
+                    field: textfield,
+                    text: textfield.value,
+                    column: this,
+                    caseSensitive: this.filterCaseSensitive,
+                    customFiltering: this.customFiltering,
+                },
+            }),
+        );
+    }
+
+    /** @internal */
+    protected onFilterTextFieldKeyDown(e: KeyboardEvent) {
+        const textfield = e.target as TextField;
+        /**
+         * Event emitted when the user has typed in column filter textfield.
+         *
+         * Event detail: `FilterTextFieldKeyDownEventDetail`;
+         */
+        this.dispatchEvent(
+            new CustomEvent<FilterTextFieldKeyDownEventDetail>('keydown', {
+                detail: {
+                    field: textfield,
+                    key: e.key,
+                    column: this,
+                },
+            }),
+        );
+    }
+
+    /** @internal */
+    protected onSortButtonClicked(e: Event) {
+        this.sortedDescending = this.sortButton?.selected ?? false;
+        /**
+         * Event emitted when the user has typed in column filter textfield.
+         *
+         * Event detail: `SortButtonClickedEventDetail`;
+         */
+        this.dispatchEvent(
+            new CustomEvent<SortButtonClickedEventDetail>('sort', {
+                detail: {
+                    column: this,
+                    isDescending: this.sortedDescending,
+                    customSorting: this.customSorting,
+                },
+            }),
+        );
+    }
+
+    protected override updated(_changedProperties: PropertyValues) {
+        if (_changedProperties.has('sorted')) {
+            this.withSortButton = this.sortable && this.sorted;
+        }
+        super.updated(_changedProperties);
+    }
 }

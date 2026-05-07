@@ -1,90 +1,92 @@
-@use 'sass:map';
+@use "sass:map";
 
 @use "@material/data-table/data-table";
-@use '../../tokens';
+@use "../../tokens";
 @use "@material/web/elevation/elevation";
 @use "@material/elevation" as oldelevation;
 
-$_custom-property-prefix: 'data-table';
+$_custom-property-prefix: "data-table";
 
 @mixin styles() {
-  $tokens: tokens.md-comp-data-table-values();
+    $tokens: tokens.md-comp-data-table-values();
 
-  :host {
-    @each $token, $value in $tokens {
-      --_#{$token}: var(--md-data-table-#{$token}, #{$value});
-    }
-    --_pagination-outlined-select-field-top-space: var(--md-data-table-pagination-outlined-select-field-top-space, 6px);
-    --_pagination-outlined-select-field-bottom-space: var(--md-data-table-pagination-outlined-select-field-bottom-space, 6px);
-  }
-
-  @include data-table.core-styles;
-  @include data-table.theme-baseline;
-
-  .mdc-data-table {
-    @include oldelevation.elevation(0);
-    @include elevation.theme(
-                    (
-                            level: var(--_container-elevation),
-                            shadow-color: var(--_container-shadow-color)
-                    )
-    );
-    background-color: transparent;
-
-    border-radius: var(--_container-shape);
-
-    @if (map.get($tokens, 'outline-width')) {
-      border: var(--_outline-width) solid var(--_outline-color);
+    :host {
+        @each $token, $value in $tokens {
+            --_#{$token}: var(--md-data-table-#{$token}, #{$value});
+        }
+        --_pagination-outlined-select-field-top-space: var(--md-data-table-pagination-outlined-select-field-top-space, 6px);
+        --_pagination-outlined-select-field-bottom-space: var(--md-data-table-pagination-outlined-select-field-bottom-space, 6px);
     }
 
-    .mdc-data-table__table {
-      display: table;
+    @include data-table.core-styles;
+    @include data-table.theme-baseline;
 
-      width: var(--mdc-data-table-width);
-      height: var(--mdc-data-table-height);
-    }
+    .mdc-data-table {
+        @include oldelevation.elevation(0);
+        @include elevation.theme(
+            (
+                level: var(--_container-elevation),
+                shadow-color: var(--_container-shadow-color),
+            )
+        );
+        background-color: transparent;
 
-    .mdc-data-table__head {
-      display: table-header-group;
-      vertical-align: middle;
-      border-color: inherit;
-    }
+        border-radius: var(--_container-shape);
 
-    .mdc-data-table__header-row {
-      display: table-row;
-      vertical-align: inherit;
-      border-color: inherit;
-    }
+        @if (map.get($tokens, "outline-width")) {
+            border: var(--_outline-width) solid var(--_outline-color);
+        }
 
-    .mdc-data-table__content {
-      display: table-row-group;
-      vertical-align: middle;
-      border-color: inherit;
-    }
+        .mdc-data-table__table {
+            display: table;
 
-    slot {
-      vertical-align: inherit;
-    }
+            width: var(--mdc-data-table-width);
+            height: var(--mdc-data-table-height);
+        }
 
-    .mdc-data-table__pagination-trailing {
-      margin: 0;
-    }
+        .mdc-data-table__head {
+            display: table-header-group;
+            vertical-align: middle;
+            border-color: inherit;
+        }
 
-    .mdc-data-table__pagination-rows-per-page-select {
-      --md-outlined-field-top-space: var(--_pagination-outlined-select-field-top-space);
-      --md-outlined-field-bottom-space: var(--_pagination-outlined-select-field-bottom-space);
-    }
+        .mdc-data-table__header-row {
+            display: table-row;
+            vertical-align: inherit;
+            border-color: inherit;
+        }
 
-    .mdc-data-table__pagination-total, .mdc-data-table__pagination-rows-per-page-label, .mdc-data-table__cell {
-      font: var(--_footer-supporting-text-font);
-      line-height: var(--_footer-supporting-text-line-height);
-      font-size: var(--_footer-supporting-text-size);
-      font-weight: var(--_footer-supporting-text-weight);
-      color: var(--_footer-supporting-text-color);
-    }
+        .mdc-data-table__content {
+            display: table-row-group;
+            vertical-align: middle;
+            border-color: inherit;
+        }
 
-    .mdc-data-table__linear-progress {
-      width: 100%;
+        slot {
+            vertical-align: inherit;
+        }
+
+        .mdc-data-table__pagination-trailing {
+            margin: 0;
+        }
+
+        .mdc-data-table__pagination-rows-per-page-select {
+            --md-outlined-field-top-space: var(--_pagination-outlined-select-field-top-space);
+            --md-outlined-field-bottom-space: var(--_pagination-outlined-select-field-bottom-space);
+        }
+
+        .mdc-data-table__pagination-total,
+        .mdc-data-table__pagination-rows-per-page-label,
+        .mdc-data-table__cell {
+            font: var(--_footer-supporting-text-font);
+            line-height: var(--_footer-supporting-text-line-height);
+            font-size: var(--_footer-supporting-text-size);
+            font-weight: var(--_footer-supporting-text-weight);
+            color: var(--_footer-supporting-text-color);
+        }
+
+        .mdc-data-table__linear-progress {
+            width: 100%;
+        }
     }
-  }
 }

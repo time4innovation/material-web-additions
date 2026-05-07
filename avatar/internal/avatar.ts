@@ -1,10 +1,10 @@
 import '@material/web/ripple/ripple.js';
-import '@material/web/focus/md-focus-ring.js';
+import 'material/internal/focus/focus-ring.js';
 import '@material/web/elevation/elevation.js';
 import '@material/web/button/text-button.js';
 
-import {html, LitElement} from 'lit';
-import {query, queryAssignedElements} from 'lit/decorators.js';
+import { html, LitElement } from 'lit';
+import { query, queryAssignedElements } from 'lit/decorators.js';
 
 /**
  * Avatar component.
@@ -25,7 +25,7 @@ export abstract class Avatar extends LitElement {
     protected onSlotContentsChange() {
         let text = '';
         let element = undefined;
-        console.log("a", this.defaultSlot.textContent, "b", this.defaultSlot.assignedNodes());
+        console.log('a', this.defaultSlot.textContent, 'b', this.defaultSlot.assignedNodes());
         if (this.contents.length == 0 && this.defaultSlot.assignedNodes().length > 0) {
             // If there are no contents, but the default slot has assigned nodes, use the default slot text
             const nodes = this.defaultSlot.assignedNodes();
@@ -42,7 +42,10 @@ export abstract class Avatar extends LitElement {
 
         if (element && text) {
             // If there are spaces, get the first and last initial
-            let initials = text?.split(' ').map((word) => word[0]).join('');
+            let initials = text
+                ?.split(' ')
+                .map((word) => word[0])
+                .join('');
 
             // If there are no spaces, get the first two letters
             if (!initials) {
