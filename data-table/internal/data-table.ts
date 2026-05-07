@@ -107,7 +107,7 @@ export class DataTable extends LitElement {
      * Label pattern to show after the page size select that indicates the current rows shown in the page.
      * It should contain the following parameters: `:firstRow`, `:lastRow`, `:totalRows`
      */
-    @property({ type: String }) paginationTotalLabel = ':firstRow-:lastRow of :totalRows';
+    @property({ type: String, attribute: 'pagination-total-label' }) paginationTotalLabel = ':firstRow-:lastRow of :totalRows';
     /**
      * Whether the data table is using a custom pagination function. If true, the automatic pagination is disabled and
      * the `current-first-row`, `current-last-row` and `current-page-size` attributes are not updated automatically.
@@ -125,10 +125,14 @@ export class DataTable extends LitElement {
     @property({ type: String }) density: '' | 'tight' | 'comfortable' | 'dense' | 'compact' = '';
     /** @internal */
     @queryAssignedElements({ slot: 'header-cell', selector: 'md-data-table-column' }) protected columns!: DataTableColumn[];
-
     @queryAssignedElements({ slot: 'pagination-first-button-icon', flatten: true })
     protected paginationFirstButtonIcon!: any;
-
+    @queryAssignedElements({ slot: 'pagination-previous-button-icon', flatten: true })
+    protected paginationPreviousButtonIcon!: any;
+    @queryAssignedElements({ slot: 'pagination-next-button-icon', flatten: true })
+    protected paginationNextButtonIcon!: any;
+    @queryAssignedElements({ slot: 'pagination-last-button-icon', flatten: true })
+    protected paginationLastButtonIcon!: any;
     /** @internal */
     @queryAssignedElements({ slot: 'row', selector: 'md-data-table-row' }) protected rows!: DataTableRow[];
     /** @internal */
@@ -381,14 +385,16 @@ export class DataTable extends LitElement {
                                              data-page="first"
                                              ?disabled=${currentFirstRow <= 1}
                                              @click=${this.onPaginationButtonClicked}>
-                          <slot name="pagination-first-button-icon"></slot>
+                          <slot name="pagination-first-button-icon">
+                            ${this.paginationFirstButtonIcon}
+                          </slot>
                       </md-icon-button>
                       <md-icon-button color="filled" class="mdc-data-table__pagination-button"
                                              data-page="previous"
                                              ?disabled=${currentFirstRow <= 1}
                                              @click=${this.onPaginationButtonClicked}>
                           <slot name="pagination-previous-button-icon">
-                              <md-icon>chevron_left</md-icon>
+                            ${this.paginationPreviousButtonIcon}
                           </slot>
                       </md-icon-button>
                       <md-icon-button color="filled" class="mdc-data-table__pagination-button"
@@ -396,7 +402,7 @@ export class DataTable extends LitElement {
                                              ?disabled=${currentLastRow >= totalRows}
                                              @click=${this.onPaginationButtonClicked}>
                           <slot name="pagination-next-button-icon">
-                              <md-icon>chevron_right</md-icon>
+                            ${this.paginationNextButtonIcon}
                           </slot>
                       </md-icon-button>
                       <md-icon-button color="filled" class="mdc-data-table__pagination-button"
@@ -404,7 +410,7 @@ export class DataTable extends LitElement {
                                              ?disabled=${currentLastRow >= totalRows}
                                              @click=${this.onPaginationButtonClicked}>
                           <slot name="pagination-last-button-icon">
-                              <md-icon>last_page</md-icon>
+                            ${this.paginationLastButtonIcon}
                           </slot>
                       </md-icon-button>
                   </div>
