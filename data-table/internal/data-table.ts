@@ -376,7 +376,7 @@ export class DataTable extends LitElement {
                                              ?disabled=${currentFirstRow <= 1}
                                              @click=${this.onPaginationButtonClicked}>
                           <slot name="pagination-first-button-icon">
-                              <md-icon slot="icon">first_page</md-icon>
+                              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M240-240v-480h80v480h-80Zm440 0L440-480l240-240 56 56-184 184 184 184-56 56Z"/></svg>
                           </slot>
                       </md-icon-button>
                       <md-icon-button color="filled" class="mdc-data-table__pagination-button"
