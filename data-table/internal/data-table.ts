@@ -128,10 +128,6 @@ export class DataTable extends LitElement {
 
     @queryAssignedElements({ slot: 'pagination-first-button-icon', flatten: true })
     protected paginationFirstButtonIcon!: any;
-    /** @internal */
-    get getPaginationFirstButtonIcon(): any {
-        return this.paginationFirstButtonIcon?.[0];
-    }
 
     /** @internal */
     @queryAssignedElements({ slot: 'row', selector: 'md-data-table-row' }) protected rows!: DataTableRow[];
@@ -165,8 +161,6 @@ export class DataTable extends LitElement {
     }
 
     protected override render() {
-        console.log(this.paginationFirstButtonIcon);
-
         return html`
             <div class="mdc-data-table">
                 <div class="mdc-data-table__table-container">
@@ -347,6 +341,8 @@ export class DataTable extends LitElement {
     };
 
     protected renderPagination() {
+        console.log(this.paginationTotalLabel);
+
         if (this.paginated) {
             const totalRows = this.totalRows || this.rows.length;
             const currentFirstRow = this.currentFirstRow < 1 ? 1 : this.currentFirstRow;
