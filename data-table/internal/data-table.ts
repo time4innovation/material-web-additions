@@ -126,8 +126,12 @@ export class DataTable extends LitElement {
     /** @internal */
     @queryAssignedElements({ slot: 'header-cell', selector: 'md-data-table-column' }) protected columns!: DataTableColumn[];
 
-    @queryAssignedElements({ slot: 'pagination-first-button-icon', selector: 'md-data-table-column' })
+    @queryAssignedElements({ slot: 'pagination-first-button-icon', flatten: true })
     protected paginationFirstButtonIcon!: any;
+    /** @internal */
+    get getPaginationFirstButtonIcon(): any {
+        return this.paginationFirstButtonIcon?.[0];
+    }
 
     /** @internal */
     @queryAssignedElements({ slot: 'row', selector: 'md-data-table-row' }) protected rows!: DataTableRow[];
