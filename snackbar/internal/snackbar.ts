@@ -1,10 +1,10 @@
-import '@material/web/ripple/ripple.js';
-import '@material/web/focus/md-focus-ring.js';
-import '@material/web/elevation/elevation.js';
-import '@material/web/button/text-button.js';
+import 'material/internal/ripple/ripple.js';
+import 'material/internal/focus/focus-ring.js';
+import 'material/internal/elevation/elevation.js';
+import 'material/buttons/button.js';
 
-import {html, LitElement} from 'lit';
-import {property} from 'lit/decorators/property.js';
+import { html, LitElement } from 'lit';
+import { property } from 'lit/decorators/property.js';
 
 /**
  * Snackbar component.
@@ -17,47 +17,51 @@ import {property} from 'lit/decorators/property.js';
  */
 export abstract class Snackbar extends LitElement {
     /** Opened state of the snackbar. */
-    @property({type: Boolean, reflect: true}) open = false;
+    @property({ type: Boolean, reflect: true }) open = false;
     /** Support two lines of text. */
-    @property({type: Boolean, reflect: true, attribute: 'two-lines'}) twoLines = false;
+    @property({ type: Boolean, reflect: true, attribute: 'two-lines' }) twoLines = false;
     /** Text for the action button. */
-    @property({type: String, attribute: 'action-text'}) actionText?: string;
+    @property({ type: String, attribute: 'action-text' }) actionText?: string;
     /** Fixed position of the snackbar. */
-    @property({type: Boolean, reflect: true}) fixed = false;
+    @property({ type: Boolean, reflect: true }) fixed = false;
     /** Timeout for the snackbar to close automatically. */
-    @property({type: Number, reflect: true}) timeout = 5000;
+    @property({ type: Number, reflect: true }) timeout = 5000;
 
     protected override render() {
         return html`
-            ${this.renderSupportingText()}
-            ${this.renderAction()}
-            ${this.renderIcon()}
+            ${this.renderSupportingText()} ${this.renderAction()} ${this.renderIcon()}
             <md-elevation></md-elevation>
         `;
     }
 
     protected renderSupportingText() {
-        return html`
-            <div class="md-snackbar__supporting_text">
-                <slot></slot>
-            </div>`;
+        return html` <div class="md-snackbar__supporting_text">
+            <slot></slot>
+        </div>`;
     }
 
     protected renderAction() {
         return html`<slot name="action">
-            ${this.actionText ? html`<md-text-button class="md-snackbar__action" @click="${this.onActionClick}">${this.actionText}</md-text-button>` : ''}
+            ${this.actionText
+                ? html`<md-button class="md-snackbar__action" color="text" @click="${this.onActionClick}">${this.actionText}</md-text-button>`
+                : ''}
         </slot>`;
     }
 
     protected renderIcon() {
-        return html`<slot name="icon" @click="${this.close}"></slot>`;
+        return html`<slot
+            name="icon"
+            @click="${this.close}"
+        ></slot>`;
     }
 
     protected onActionClick() {
-        this.dispatchEvent(new CustomEvent('action', {
-            bubbles: true,
-            composed: true
-        }));
+        this.dispatchEvent(
+            new CustomEvent('action', {
+                bubbles: true,
+                composed: true,
+            }),
+        );
     }
 
     /**
@@ -68,16 +72,20 @@ export abstract class Snackbar extends LitElement {
      */
     public close() {
         this.classList.remove('opened');
-        this.dispatchEvent(new CustomEvent('close', {
-            bubbles: true,
-            composed: true
-        }));
+        this.dispatchEvent(
+            new CustomEvent('close', {
+                bubbles: true,
+                composed: true,
+            }),
+        );
         setTimeout(() => {
             this.open = false;
-            this.dispatchEvent(new CustomEvent('closed', {
-                bubbles: true,
-                composed: true
-            }));
+            this.dispatchEvent(
+                new CustomEvent('closed', {
+                    bubbles: true,
+                    composed: true,
+                }),
+            );
         }, 200);
     }
 
@@ -86,16 +94,20 @@ export abstract class Snackbar extends LitElement {
      */
     public show() {
         this.open = true;
-        this.dispatchEvent(new CustomEvent('open', {
-            bubbles: true,
-            composed: true
-        }));
+        this.dispatchEvent(
+            new CustomEvent('open', {
+                bubbles: true,
+                composed: true,
+            }),
+        );
         setTimeout(() => {
             this.classList.add('opened');
-            this.dispatchEvent(new CustomEvent('opened', {
-                bubbles: true,
-                composed: true
-            }));
+            this.dispatchEvent(
+                new CustomEvent('opened', {
+                    bubbles: true,
+                    composed: true,
+                }),
+            );
         }, 200);
 
         if (this.timeout > 0) {
