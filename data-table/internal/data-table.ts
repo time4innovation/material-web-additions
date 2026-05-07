@@ -165,6 +165,8 @@ export class DataTable extends LitElement {
     }
 
     protected override render() {
+        console.log(this.paginationFirstButtonIcon);
+
         return html`
             <div class="mdc-data-table">
                 <div class="mdc-data-table__table-container">
