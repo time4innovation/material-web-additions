@@ -1,161 +1,194 @@
 {
-  "name": "@maicol07/material-web-additions",
-  "version": "1.8.0",
-  "publishConfig": {
-    "access": "public"
-  },
-  "packageManager": "pnpm@10.7.1",
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "description": "Material Web Components Additions",
-  "type": "module",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/maicol07/material-web-additions.git"
-  },
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/maicol07/material-web-additions/issues"
-  },
-  "homepage": "https://main--625eadb22bf40d003a32215a.chromatic.com/",
-  "scripts": {
-    "prepublishOnly": "pnpm run build",
-    "build": "wireit",
-    "build:ts": "wireit",
-    "build:css-to-ts": "wireit",
-    "build:sass": "wireit",
-    "build:catalog": "wireit",
-    "build:analyzer": "wireit",
-    "update-docs": "wireit"
-  },
-  "files": [
-    "**/*.js",
-    "**/*.js.map",
-    "**/*.d.ts",
-    "**/*.scss",
-    "web-types.json",
-    "!css-to-ts.js",
-    "!web-test-runner.config.js",
-    "!**/test/**",
-    "!**/testing/**",
-    "!**/*_test.*",
-    "!.wireit/**",
-    "!catalog/**",
-    "!catalog/node_modules/**",
-    "!scripts/"
-  ],
-  "dependencies": {
-    "@material/card": "^14.0.0",
-    "@material/data-table": "^14.0.0",
-    "@material/layout-grid": "^14.0.0",
-    "lit": "^3.3.0",
-    "tslib": "^2.8.1"
-  },
-  "peerDependencies": {
-    "@material/web": "^2.0.0"
-  },
-  "devDependencies": {
-    "@eslint/eslintrc": "^3.3.1",
-    "@eslint/js": "^9.25.0",
-    "@lit-labs/analyzer": "npm:@maicol07/lit-labs-analyzer",
-    "@lit-labs/gen-manifest": "npm:@maicol07/lit-labs-gen-manifest",
-    "@material/web": "npm:@maicol07/material-web@^2.0.0",
-    "@types/node": "^22.14.1",
-    "@typescript-eslint/eslint-plugin": "^8.30.1",
-    "@typescript-eslint/parser": "^8.30.1",
-    "@wc-toolkit/cem-inheritance": "^1.0.4",
-    "@web-types/lit": "2.0.0-3",
-    "@webcomponents/webcomponentsjs": "^2.8.0",
-    "custom-element-jet-brains-integration": "^1.7.0",
-    "eslint": "^9.25.0",
-    "eslint-config-google": "^0.14.0",
-    "eslint-plugin-n": "^17.17.0",
-    "eslint-plugin-wc": "^3.0.0",
-    "globals": "^16.0.0",
-    "sass": "~1.86.3",
-    "typescript": "^5.8.3",
-    "wireit": "^0.14.12"
-  },
-  "pnpm": {
-    "peerDependencyRules": {
-      "ignoreMissing": ["css-loader", "sass-loader", "style-loader"]
-    }
-  },
-  "wireit": {
-    "build": {
-      "dependencies": ["build:ts", "update-docs"]
+    "name": "@maicol07/material-web-additions",
+    "version": "1.8.0",
+    "publishConfig": {
+        "access": "public"
     },
-    "build:ts": {
-      "command": "tsc --pretty",
-      "files": [
-        "tsconfig.json",
-        "**/*.ts",
-        "!**/*.d.ts",
-        "!**/*.css.ts",
-        "!catalog",
-        "!scripts/",
-        "!node_modules"
-      ],
-      "output": [
-        ".tsbuildinfo",
+    "packageManager": "pnpm@10.7.1",
+    "engines": {
+        "node": ">=18.0.0"
+    },
+    "description": "Material Web Components Additions",
+    "type": "module",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/maicol07/material-web-additions.git"
+    },
+    "license": "Apache-2.0",
+    "bugs": {
+        "url": "https://github.com/maicol07/material-web-additions/issues"
+    },
+    "homepage": "https://main--625eadb22bf40d003a32215a.chromatic.com/",
+    "scripts": {
+        "prepare": "pnpm run build",
+        "build": "wireit",
+        "build:ts": "wireit",
+        "build:css-to-ts": "wireit",
+        "build:sass": "wireit",
+        "build:catalog": "wireit",
+        "build:analyzer": "wireit",
+        "update-docs": "wireit"
+    },
+    "files": [
         "**/*.js",
         "**/*.js.map",
         "**/*.d.ts",
+        "**/*.scss",
+        "web-types.json",
         "!css-to-ts.js",
         "!web-test-runner.config.js",
-        "!types/",
-        "!catalog",
+        "!**/test/**",
+        "!**/testing/**",
+        "!**/*_test.*",
+        "!.wireit/**",
+        "!catalog/**",
+        "!catalog/node_modules/**",
         "!scripts/"
-      ],
-      "clean": "if-file-deleted",
-      "dependencies": ["build:css-to-ts"]
+    ],
+    "dependencies": {
+        "@material/card": "^14.0.0",
+        "@material/data-table": "^14.0.0",
+        "@material/layout-grid": "^14.0.0",
+        "lit": "^3.3.0",
+        "tslib": "^2.8.1"
     },
-    "build:css-to-ts": {
-      "command": "find . \\( -path ./.wireit -o -path ./node_modules -o -path ./catalog \\) -prune -o -name '*.css' -print | xargs node css-to-ts.js",
-      "files": ["css-to-ts.js", "!scripts/", "!node_modules"],
-      "output": ["**/*.css.ts", "!catalog", "!scripts/"],
-      "dependencies": ["build:sass"]
+    "peerDependencies": {
+        "@material/web": "^2.0.0"
     },
-    "build:sass": {
-      "command": "sass --style=compressed --load-path=node_modules --load-path=node_modules/sass-true/sass $(ls -d */ | grep -vE 'node_modules|catalog')",
-      "files": ["**/*.scss", "!catalog", "!scripts/", "!node_modules"],
-      "output": ["**/*.css", "**/*.css.map", "!catalog", "!scripts/"]
+    "devDependencies": {
+        "@eslint/eslintrc": "^3.3.1",
+        "@eslint/js": "^9.25.0",
+        "@lit-labs/analyzer": "npm:@maicol07/lit-labs-analyzer",
+        "@lit-labs/gen-manifest": "npm:@maicol07/lit-labs-gen-manifest",
+        "@material/web": "npm:@maicol07/material-web@^2.0.0",
+        "@types/node": "^22.14.1",
+        "@typescript-eslint/eslint-plugin": "^8.30.1",
+        "@typescript-eslint/parser": "^8.30.1",
+        "@wc-toolkit/cem-inheritance": "^1.0.4",
+        "@web-types/lit": "2.0.0-3",
+        "@webcomponents/webcomponentsjs": "^2.8.0",
+        "custom-element-jet-brains-integration": "^1.7.0",
+        "eslint": "^9.25.0",
+        "eslint-config-google": "^0.14.0",
+        "eslint-plugin-n": "^17.17.0",
+        "eslint-plugin-wc": "^3.0.0",
+        "globals": "^16.0.0",
+        "sass": "~1.86.3",
+        "typescript": "^5.8.3",
+        "wireit": "^0.14.12"
     },
-    "build:catalog": {
-      "dependencies": ["./catalog:build:prod"]
+    "pnpm": {
+        "peerDependencyRules": {
+            "ignoreMissing": [
+                "css-loader",
+                "sass-loader",
+                "style-loader"
+            ]
+        }
     },
-    "build:analyzer": {
-      "command": "tsc -b scripts/tsconfig.json --pretty",
-      "files": [
-        "scripts/tsconfig.json",
-        "scripts/analyzer/**/*.ts",
-        "!**/*.d.ts",
-        "!**/*.css.ts"
-      ],
-      "output": [
-        "scripts/.tsbuildinfo",
-        "scripts/analyzer/**/*.js",
-        "scripts/analyzer/**/*.js.map",
-        "scripts/analyzer/**/*.d.ts"
-      ],
-      "clean": "if-file-deleted"
+    "wireit": {
+        "build": {
+            "dependencies": [
+                "build:ts",
+                "update-docs"
+            ]
+        },
+        "build:ts": {
+            "command": "tsc --pretty",
+            "files": [
+                "tsconfig.json",
+                "**/*.ts",
+                "!**/*.d.ts",
+                "!**/*.css.ts",
+                "!catalog",
+                "!scripts/",
+                "!node_modules"
+            ],
+            "output": [
+                ".tsbuildinfo",
+                "**/*.js",
+                "**/*.js.map",
+                "**/*.d.ts",
+                "!css-to-ts.js",
+                "!web-test-runner.config.js",
+                "!types/",
+                "!catalog",
+                "!scripts/"
+            ],
+            "clean": "if-file-deleted",
+            "dependencies": [
+                "build:css-to-ts"
+            ]
+        },
+        "build:css-to-ts": {
+            "command": "find . \\( -path ./.wireit -o -path ./node_modules -o -path ./catalog \\) -prune -o -name '*.css' -print | xargs node css-to-ts.js",
+            "files": [
+                "css-to-ts.js",
+                "!scripts/",
+                "!node_modules"
+            ],
+            "output": [
+                "**/*.css.ts",
+                "!catalog",
+                "!scripts/"
+            ],
+            "dependencies": [
+                "build:sass"
+            ]
+        },
+        "build:sass": {
+            "command": "sass --style=compressed --load-path=node_modules --load-path=node_modules/sass-true/sass $(ls -d */ | grep -vE 'node_modules|catalog')",
+            "files": [
+                "**/*.scss",
+                "!catalog",
+                "!scripts/",
+                "!node_modules"
+            ],
+            "output": [
+                "**/*.css",
+                "**/*.css.map",
+                "!catalog",
+                "!scripts/"
+            ]
+        },
+        "build:catalog": {
+            "dependencies": [
+                "./catalog:build:prod"
+            ]
+        },
+        "build:analyzer": {
+            "command": "tsc -b scripts/tsconfig.json --pretty",
+            "files": [
+                "scripts/tsconfig.json",
+                "scripts/analyzer/**/*.ts",
+                "!**/*.d.ts",
+                "!**/*.css.ts"
+            ],
+            "output": [
+                "scripts/.tsbuildinfo",
+                "scripts/analyzer/**/*.js",
+                "scripts/analyzer/**/*.js.map",
+                "scripts/analyzer/**/*.d.ts"
+            ],
+            "clean": "if-file-deleted"
+        },
+        "update-docs": {
+            "command": "node scripts/analyzer/update-docs.js",
+            "files": [
+                "docs/components/*.md",
+                "**/*.ts",
+                "!**/*.d.ts",
+                "!**/*.css.ts",
+                "!catalog",
+                "!scripts/",
+                "scripts/analyzer/update-docs.js",
+                "!node_modules"
+            ],
+            "output": [],
+            "dependencies": [
+                "build:analyzer"
+            ]
+        }
     },
-    "update-docs": {
-      "command": "node scripts/analyzer/update-docs.js",
-      "files": [
-        "docs/components/*.md",
-        "**/*.ts",
-        "!**/*.d.ts",
-        "!**/*.css.ts",
-        "!catalog",
-        "!scripts/",
-        "scripts/analyzer/update-docs.js",
-        "!node_modules"
-      ],
-      "output": [],
-      "dependencies": ["build:analyzer"]
-    }
-  },
-  "web-types": "./web-types.json"
+    "web-types": "./web-types.json"
 }
