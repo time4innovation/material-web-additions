@@ -125,6 +125,10 @@ export class DataTable extends LitElement {
     @property({ type: String }) density: '' | 'tight' | 'comfortable' | 'dense' | 'compact' = '';
     /** @internal */
     @queryAssignedElements({ slot: 'header-cell', selector: 'md-data-table-column' }) protected columns!: DataTableColumn[];
+
+    @queryAssignedElements({ slot: 'pagination-first-button-icon', selector: 'md-data-table-column' })
+    protected paginationFirstButtonIcon!: any;
+
     /** @internal */
     @queryAssignedElements({ slot: 'row', selector: 'md-data-table-row' }) protected rows!: DataTableRow[];
     /** @internal */
@@ -375,9 +379,7 @@ export class DataTable extends LitElement {
                                              data-page="first"
                                              ?disabled=${currentFirstRow <= 1}
                                              @click=${this.onPaginationButtonClicked}>
-                          <slot name="pagination-first-button-icon">
-                              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M240-240v-480h80v480h-80Zm440 0L440-480l240-240 56 56-184 184 184 184-56 56Z"/></svg>
-                          </slot>
+                          <slot name="pagination-first-button-icon"></slot>
                       </md-icon-button>
                       <md-icon-button color="filled" class="mdc-data-table__pagination-button"
                                              data-page="previous"
