@@ -345,8 +345,6 @@ export class DataTable extends LitElement {
     };
 
     protected renderPagination() {
-        console.log(this.paginationTotalLabel);
-
         if (this.paginated) {
             const totalRows = this.totalRows || this.rows.length;
             const currentFirstRow = this.currentFirstRow < 1 ? 1 : this.currentFirstRow;
