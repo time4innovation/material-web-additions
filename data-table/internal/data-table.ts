@@ -1,4 +1,4 @@
-import 'material/progress/progress.js';
+import 'material/indicators/progress.js';
 import 'material/buttons/icon-button.js';
 import 'material/select/select.js';
 import 'material/select/select-option.js';
