@@ -70,6 +70,11 @@ $_custom-property-prefix: "data-table";
             margin: 0;
         }
 
+        // Wrapper without slot attribute: md-icon-button hides slotted elements carrying a slot attribute.
+        .mdc-data-table__pagination-button-icon {
+            display: inline-flex;
+        }
+
         .mdc-data-table__pagination-rows-per-page-select {
             --md-outlined-field-top-space: var(--_pagination-outlined-select-field-top-space);
             --md-outlined-field-bottom-space: var(--_pagination-outlined-select-field-bottom-space);

@@ -125,14 +125,6 @@ export class DataTable extends LitElement {
     @property({ type: String }) density: '' | 'tight' | 'comfortable' | 'dense' | 'compact' = '';
     /** @internal */
     @queryAssignedElements({ slot: 'header-cell', selector: 'md-data-table-column' }) protected columns!: DataTableColumn[];
-    @queryAssignedElements({ slot: 'pagination-first-button-icon', flatten: true })
-    protected paginationFirstButtonIcon!: any;
-    @queryAssignedElements({ slot: 'pagination-previous-button-icon', flatten: true })
-    protected paginationPreviousButtonIcon!: any;
-    @queryAssignedElements({ slot: 'pagination-next-button-icon', flatten: true })
-    protected paginationNextButtonIcon!: any;
-    @queryAssignedElements({ slot: 'pagination-last-button-icon', flatten: true })
-    protected paginationLastButtonIcon!: any;
     /** @internal */
     @queryAssignedElements({ slot: 'row', selector: 'md-data-table-row' }) protected rows!: DataTableRow[];
     /** @internal */
@@ -383,33 +375,25 @@ export class DataTable extends LitElement {
                                              data-page="first"
                                              ?disabled=${currentFirstRow <= 1}
                                              @click=${this.onPaginationButtonClicked}>
-                          <slot name="pagination-first-button-icon">
-                            ${this.paginationFirstButtonIcon}
-                          </slot>
+                          <span class="mdc-data-table__pagination-button-icon"><slot name="pagination-first-button-icon"></slot></span>
                       </md-icon-button>
                       <md-icon-button color="filled" class="mdc-data-table__pagination-button"
                                              data-page="previous"
                                              ?disabled=${currentFirstRow <= 1}
                                              @click=${this.onPaginationButtonClicked}>
-                          <slot name="pagination-previous-button-icon">
-                            ${this.paginationPreviousButtonIcon}
-                          </slot>
+                          <span class="mdc-data-table__pagination-button-icon"><slot name="pagination-previous-button-icon"></slot></span>
                       </md-icon-button>
                       <md-icon-button color="filled" class="mdc-data-table__pagination-button"
                                              data-page="next"
                                              ?disabled=${currentLastRow >= totalRows}
                                              @click=${this.onPaginationButtonClicked}>
-                          <slot name="pagination-next-button-icon">
-                            ${this.paginationNextButtonIcon}
-                          </slot>
+                          <span class="mdc-data-table__pagination-button-icon"><slot name="pagination-next-button-icon"></slot></span>
                       </md-icon-button>
                       <md-icon-button color="filled" class="mdc-data-table__pagination-button"
                                              data-page="last"
                                              ?disabled=${currentLastRow >= totalRows}
                                              @click=${this.onPaginationButtonClicked}>
-                          <slot name="pagination-last-button-icon">
-                            ${this.paginationLastButtonIcon}
-                          </slot>
+                          <span class="mdc-data-table__pagination-button-icon"><slot name="pagination-last-button-icon"></slot></span>
                       </md-icon-button>
                   </div>
               </div>
@@ -433,7 +417,9 @@ export class DataTable extends LitElement {
     }
 
     protected onPaginationButtonClicked(event: Event) {
-        let button = event.target as HTMLElement;
+        // currentTarget is the md-icon-button carrying the listener; target may be the slotted icon in the light DOM,
+        // from where closest() cannot reach the button in the shadow DOM.
+        let button = (event.currentTarget ?? event.target) as HTMLElement;
         if (!(button instanceof IconButton)) {
             button = button.closest('.mdc-data-table__pagination-button') as IconButton;
         }
