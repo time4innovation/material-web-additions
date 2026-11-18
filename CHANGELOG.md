@@ -19,6 +19,20 @@
 - [`688d7ce`](https://github.com/maicol07/material-web-additions/commit/688d7ce186a47dfe2796cc443fbfc61008594346) **deps:** ⬆️ Upgraded dependencies
 
 
+## [1.8.2](https://github.com/time4innovation/material-web-additions/compare/f60be23fe87f2855d15c07ae11b25b3d646e0254...39661bc58b4320b3a03e3a0ffcc0b3f83911c86c) (2026-11-18, Fork time4innovation)
+
+
+### Bug Fixes
+
+* **data-table:** 🐛 Leere Tabelle mit `custom-pagination` zeigt „0-0 von 0“, alle vier Schaltflächen der Paginierung sind gesperrt; maßgeblich ist nur `total-rows`, nicht mehr die Zahl der Zeilen im DOM ([39661bc](https://github.com/time4innovation/material-web-additions/commit/39661bc58b4320b3a03e3a0ffcc0b3f83911c86c))
+
+## [1.8.1](https://github.com/time4innovation/material-web-additions/compare/98191b3e5e89be8561932b5049c3673e8884f310...f60be23fe87f2855d15c07ae11b25b3d646e0254) (2026-11-18, Fork time4innovation)
+
+
+### Bug Fixes
+
+* **data-table:** 🐛 Icons der Paginierung sind in Chrome sofort sichtbar: der Slot steckt in einem `span` ohne `slot`-Attribut, der Ersatzinhalt aus zugewiesenen Elementen entfällt; ein Klick direkt auf das Icon blättert (`currentTarget` im Klick-Handler) ([f60be23](https://github.com/time4innovation/material-web-additions/commit/f60be23fe87f2855d15c07ae11b25b3d646e0254))
+
 <a name="1.4.1"></a>
 ## [1.8.0](https://github.com/maicol07/material-web-additions/compare/v1.7.0...v1.8.0) (2025-04-28)
 
