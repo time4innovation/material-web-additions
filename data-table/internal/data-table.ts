@@ -338,8 +338,10 @@ export class DataTable extends LitElement {
 
     protected renderPagination() {
         if (this.paginated) {
-            const totalRows = this.totalRows || this.rows.length;
-            const currentFirstRow = this.currentFirstRow < 1 ? 1 : this.currentFirstRow;
+            // with custom pagination total-rows is authoritative: slotted placeholder rows (e.g. a "no entries" row) must not count
+            const totalRows = this.customPagination ? this.totalRows : this.totalRows || this.rows.length;
+            // an empty table shows 0-0 of 0 and disables all four buttons
+            const currentFirstRow = totalRows < 1 ? 0 : this.currentFirstRow < 1 ? 1 : this.currentFirstRow;
             const currentLastRow = this.currentLastRow > totalRows ? totalRows : this.currentLastRow;
             return html`
           <md-data-table-footer>
